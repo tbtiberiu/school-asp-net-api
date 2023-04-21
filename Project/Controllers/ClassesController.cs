@@ -1,5 +1,6 @@
 ﻿using Core.Dtos;
 using Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Project.Controllers
@@ -7,6 +8,7 @@ namespace Project.Controllers
 
     [ApiController]
     [Route("api/classes")]
+    [Authorize]
     public class ClassesController : ControllerBase
     {
         private readonly ClassService classService;

@@ -17,27 +17,22 @@ namespace Project.Controllers
         }
 
 
-        [HttpPost("/register")]
+        [HttpPost("register")]
         public IActionResult Register(UserRegisterDto registerData)
         {
             User user = authService.Register(registerData);
             return Ok(user);
         }
 
-        [HttpPost("/login")]
+        [HttpPost("login")]
         public IActionResult Login(UserLoginDto loginData)
         {
             if (loginData == null)
             {
-                return BadRequest("Invalid client request");
+                return BadRequest("Invalid client request!");
             }
 
             var token = authService.Login(loginData);
-
-            if (token == null)
-            {
-                return Unauthorized();
-            }
 
             return Ok(token);
         }

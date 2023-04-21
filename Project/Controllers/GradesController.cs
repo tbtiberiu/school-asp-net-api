@@ -1,12 +1,14 @@
 ﻿using Core.Dtos;
 using Core.Services;
 using DataLayer.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Project.Controllers
 {
     [ApiController]
     [Route("api/grades")]
+    [Authorize]
     public class GradesController : ControllerBase
     {
         private readonly GradeService gradeService;

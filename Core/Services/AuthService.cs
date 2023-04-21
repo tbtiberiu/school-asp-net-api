@@ -26,14 +26,41 @@ namespace Core.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public object Login(UserLoginDto loginData)
+        public string Login(UserLoginDto loginData)
         {
-            throw new NotImplementedException();
+            if (loginData == null)
+            {
+                return "Invalid client request!";
+            }
+
+            var user = unitOfWork.Users.GetByEmail(loginData.Email);
+            if (user == null)
+            {
+                return "User not found!";
+            }
+
+            if (!VerifyHashedPassword(user.PasswordHash, loginData.Password))
+            {
+                return $"Invalid password!";
+            }
+
+            var token = GetToken(user);
+            if (token == null)
+            {
+                return "Token is null!";
+            }
+
+            return token;
         }
 
         public User Register(UserRegisterDto registerData)
         {
             if (registerData == null)
+            {
+                return null;
+            }
+
+            if (unitOfWork.Users.GetByEmail(registerData.Email) != null)
             {
                 return null;
             }

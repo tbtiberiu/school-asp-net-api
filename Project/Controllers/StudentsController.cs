@@ -2,12 +2,14 @@
 using Core.Services;
 using DataLayer.Entities;
 using DataLayer.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Project.Controllers
 {
     [ApiController]
     [Route("api/students")]
+    [Authorize]
     public class StudentsController : ControllerBase
     {
         private StudentService studentService { get; set; }
@@ -18,7 +20,7 @@ namespace Project.Controllers
             this.studentService = studentService;
         }
 
-        [HttpPost("/add")]
+        [HttpPost("add")]
         public IActionResult Add(StudentAddDto payload)
         {
             var result = studentService.AddStudent(payload);
@@ -32,7 +34,7 @@ namespace Project.Controllers
         }
 
 
-        [HttpGet("/get-all")]
+        [HttpGet("get-all")]
         public ActionResult<List<Student>> GetAll()
         {
             var results = studentService.GetAll();
@@ -40,7 +42,7 @@ namespace Project.Controllers
             return Ok(results);
         }
 
-        [HttpGet("/get-page/{page}")]
+        [HttpGet("get-page/{page}")]
         public ActionResult<List<Student>> GetPage(int page)
         {
             var result = studentService.GetPage(page);
@@ -48,7 +50,7 @@ namespace Project.Controllers
             return Ok(result);
         }
 
-        [HttpGet("/get/{studentId}")]
+        [HttpGet("get/{studentId}")]
         public ActionResult<Student> GetById(int studentId)
         {
             var result = studentService.GetById(studentId);
