@@ -73,7 +73,8 @@ namespace Core.Services
                 LastName = registerData.LastName,
                 Email = registerData.Email,
                 PasswordHash = hashedPassword,
-                Role = registerData.Role
+                Role = registerData.Role,
+                StudentId = registerData.StudentId
             };
 
             unitOfWork.Users.Insert(user);
@@ -97,12 +98,13 @@ namespace Core.Services
             var emailClaim = new Claim(ClaimTypes.Email, user.Email);
             var roleClaim = new Claim(ClaimTypes.Role, user.Role.ToString());
             var idClaim = new Claim("userId", user.Id.ToString());
+            var studentIdClaim = new Claim("studentId", user.StudentId.ToString());
 
             var tokenDescriptior = new SecurityTokenDescriptor
             {
                 Issuer = "Backend",
                 Audience = "Frontend",
-                Subject = new ClaimsIdentity(new[] { roleClaim, idClaim, emailClaim }),
+                Subject = new ClaimsIdentity(new[] { roleClaim, idClaim, emailClaim, studentIdClaim }),
                 Expires = DateTime.Now.AddMinutes(5),
                 SigningCredentials = credentials
             };

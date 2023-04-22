@@ -1,6 +1,5 @@
 ﻿using Core.Dtos;
 using Core.Services;
-using DataLayer.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,12 +30,23 @@ namespace Project.Controllers
             return Ok(result);
         }
 
-        [HttpGet("get-all")]
-        public ActionResult<List<GradeExtraDto>> GetAll()
+        [HttpGet("teacher-get-all")]
+        [Authorize(Roles = "Teacher")]
+        public IActionResult TeacherGetAll()
         {
-            var result = gradeService.GetAll();
+            var results = gradeService.GetAll();
 
-            return Ok(result);
+            return Ok(results);
+        }
+
+        [HttpGet("student-get-all")]
+        [Authorize(Roles = "Student")]
+        public IActionResult StudentGetAll()
+        {
+            var studentId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == "studentId").Value);
+            var results = gradeService.GetGradesByStudentId(studentId);
+
+            return Ok(results);
         }
 
         [HttpGet("{studentId}/student-grades")]

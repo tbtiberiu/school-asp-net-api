@@ -33,7 +33,6 @@ namespace Project.Controllers
             return Ok(result);
         }
 
-
         [HttpGet("get-all")]
         public ActionResult<List<Student>> GetAll()
         {

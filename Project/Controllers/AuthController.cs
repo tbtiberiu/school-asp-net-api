@@ -16,7 +16,6 @@ namespace Project.Controllers
             this.authService = authService;
         }
 
-
         [HttpPost("register")]
         public IActionResult Register(UserRegisterDto registerData)
         {

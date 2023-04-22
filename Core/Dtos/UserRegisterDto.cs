@@ -15,5 +15,6 @@ namespace Core.Dtos
         public string Password { get; set; }
         [Required]
         public Role Role { get; set; }
+        public int StudentId { get; set; }
     }
 }
